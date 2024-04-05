@@ -1,7 +1,7 @@
 ### Check out my article on "Demystifying AWS EKS's aws-auth ConfigMap: A Comprehensive Guide"
 https://medium.com/@kennyangjy/
 
-<img src="./aws-auth-configmap.jpg"  width="70%" height="70%">
+<img src="./aws-auth-configmap.jpg"  width="100%" height="100%">
 
 ---
 > *Caution:* Cost will be involved in creating these resources. For more information, do visit the relavent resource pricing pages as it differs from region to region.
@@ -12,7 +12,7 @@ https://medium.com/@kennyangjy/
 ### To provision the resources in this repository:
 1. `git clone https://github.com/Kenny-AngJY/demystifying-aws-auth.git`
 2. If you have an exisiting KMS Customer-managed key in your account and wish to use it to encrypt the secrets in EKS, create a *var.tfvars* file and define the KMS key ARN there. 
-<br>'*kms_key_arn = arn:aws:kms:...*' 
+<br>*kms_key_arn = "arn:aws:kms:..."*
 
 3. `terraform init`
 4. Following the article, we do not want to create the managed node group yet, simply run `terraform plan` or 
