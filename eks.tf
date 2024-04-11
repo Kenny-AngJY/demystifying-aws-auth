@@ -147,8 +147,8 @@ resource "aws_eks_addon" "kube-proxy" {
 ## ---------------------------------------------------------------------------------------
 
 resource "aws_iam_role" "node_group" {
-  count           = var.create_node_group ? 1 : 0
-  name = "eks-node-group-iam-role"
+  count = var.create_node_group ? 1 : 0
+  name  = "eks-node-group-iam-role"
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -164,19 +164,19 @@ resource "aws_iam_role" "node_group" {
 }
 
 resource "aws_iam_role_policy_attachment" "node_group-AmazonEKSWorkerNodePolicy" {
-  count           = var.create_node_group ? 1 : 0
+  count      = var.create_node_group ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.node_group[0].name
 }
 
 resource "aws_iam_role_policy_attachment" "node_group-AmazonEKS_CNI_Policy" {
-  count           = var.create_node_group ? 1 : 0
+  count      = var.create_node_group ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role       = aws_iam_role.node_group[0].name
 }
 
 resource "aws_iam_role_policy_attachment" "node_group-AmazonEC2ContainerRegistryReadOnly" {
-  count           = var.create_node_group ? 1 : 0
+  count      = var.create_node_group ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.node_group[0].name
 }
@@ -220,7 +220,7 @@ resource "aws_eks_node_group" "managed_node_group" {
   update_config {
     max_unavailable = 1
   }
-  
+
   capacity_type = "SPOT" # ON_DEMAND | SPOT
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
