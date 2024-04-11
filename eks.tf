@@ -220,6 +220,8 @@ resource "aws_eks_node_group" "managed_node_group" {
   update_config {
     max_unavailable = 1
   }
+  
+  capacity_type = "SPOT" # ON_DEMAND | SPOT
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
