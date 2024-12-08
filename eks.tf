@@ -1,7 +1,7 @@
 resource "aws_eks_cluster" "eks_cluster" {
   name     = local.name
   role_arn = aws_iam_role.cluster_service_role.arn
-  version  = "1.29"
+  version  = "1.31"
 
   vpc_config {
     endpoint_private_access = false
@@ -127,14 +127,14 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKSVPCResourceControlle
 resource "aws_eks_addon" "vpc-cni" {
   cluster_name  = aws_eks_cluster.eks_cluster.name
   addon_name    = "vpc-cni"
-  addon_version = "v1.16.0-eksbuild.1"
+  addon_version = "v1.19.0-eksbuild.1"
 }
 
 ### Enable service networking within your cluster.
 resource "aws_eks_addon" "kube-proxy" {
   cluster_name  = aws_eks_cluster.eks_cluster.name
   addon_name    = "kube-proxy"
-  addon_version = "v1.29.0-eksbuild.1"
+  addon_version = "v1.31.2-eksbuild.3"
 }
 
 ## ---------------------------------------------------------------------------------------
