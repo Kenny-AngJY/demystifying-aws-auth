@@ -1,3 +1,8 @@
+variable "region" {
+  type        = string
+  default     = "ap-southeast-1"
+}
+
 variable "create_vpc" {
   description = "Choose whether to create a new VPC."
   type        = bool

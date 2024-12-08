@@ -35,8 +35,6 @@ resource "aws_eks_cluster" "eks_cluster" {
     }
   }
 
-  tags = local.default_tags
-
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
   # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
   depends_on = [
@@ -50,7 +48,6 @@ resource "aws_security_group" "cluster" {
   name        = format("%s-clustersecuritygroup", local.name)
   description = "Cluster security group"
   vpc_id      = var.create_vpc ? module.vpc[0].vpc_id : var.vpc_id
-  tags        = local.default_tags
 }
 
 resource "aws_security_group_rule" "cluster" {
@@ -77,7 +74,6 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_role" "cluster_service_role" {
   name               = "eks-cluster-example"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
-  tags               = local.default_tags
 }
 
 resource "aws_iam_policy" "cluster_encryption" {
@@ -105,7 +101,6 @@ resource "aws_iam_policy" "cluster_encryption" {
       Version = "2012-10-17"
     }
   )
-  tags = local.default_tags
 }
 
 resource "aws_iam_role_policy_attachment" "cluster_encryption" {
@@ -160,7 +155,6 @@ resource "aws_iam_role" "node_group" {
     }]
     Version = "2012-10-17"
   })
-  tags = local.default_tags
 }
 
 resource "aws_iam_role_policy_attachment" "node_group-AmazonEKSWorkerNodePolicy" {
@@ -189,7 +183,6 @@ resource "aws_security_group" "node" {
   name        = format("%s-nodesecuritygroup", local.name)
   description = "Security group for all nodes in the cluster."
   vpc_id      = var.create_vpc ? module.vpc[0].vpc_id : var.vpc_id
-  tags        = local.default_tags
 }
 
 resource "aws_security_group_rule" "node" {
@@ -231,5 +224,4 @@ resource "aws_eks_node_group" "managed_node_group" {
     aws_iam_role_policy_attachment.node_group-AmazonEC2ContainerRegistryReadOnly,
   ]
 
-  tags = local.default_tags
 }
